@@ -25,6 +25,7 @@ router.post("/login", (req, res) => {
     Users.findBy({username})
     .then(([user]) => {
         if (user && bcrypt.compareSync(password, user.password)) {
+            req.session.user = username;
             res.status(200).json({ message: "welcome!"}); 
         } else {
             res.status(401).json({ message: 'invalid creds'});
