@@ -6,7 +6,7 @@ const Users = require("../users/users-model.js");
 router.post("/register", (req, res) => {
 
     const user = req.body;
-    const hash = bcrypt.hashSync(user.password, 16);
+    const hash = bcrypt.hashSync(user.password, 8);
 
     user.password = hash;
 
@@ -26,9 +26,9 @@ router.post("/login", (req, res) => {
     .then(([user]) => {
         if (user && bcrypt.compareSync(password, user.password)) {
             req.session.user = username;
-            res.status(200).json({ message: "welcome!"}); 
+            res.status(200).json({ message: "Logged in"}); 
         } else {
-            res.status(401).json({ message: 'invalid creds'});
+            res.status(401).json({ message: 'You shall not pass!'});
         }
     })
     .catch(err => {
